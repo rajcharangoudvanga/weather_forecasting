@@ -1,0 +1,12 @@
+# Python virtual environment
+venv/
+
+# Large data files
+weather_dataset.csv
+
+# Pickle files (model artifacts)
+*.pkl
+
+# Python cache
+__pycache__/
+*.pyc

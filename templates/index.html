@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+<div class="container">
+    <div class="search-box">
+        <i class='bx bxs-map'></i>
+        <input type="text" id="locationInput" placeholder="Enter your location">
+        <button id="searchButton" class="bx bx-search"></button>
+    </div>
+
+    <div class="weather-box">
+        <div class="box">
+            <div class="info-weather">
+                <div class="weather">
+                    <!-- <img src="/static/default.png"> -->
+                    <p class="temperature" id="averageTemperature">--°C</p>
+                    <p class="description">Broken Clouds</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--1-->
+    <!-- <div class="weather-details">
+        <div class="humidity"> 
+             <i class='bx bx-water'></i> 
+             <div class="text">
+                <div class="info-humidity">
+                    <span>0%</span>
+                </div>
+                <p>Humidity</p>
+            </div>
+        </div> 
+
+        <div class="wind">
+            <i class='bx bx-wind'></i>
+            <div class="text">
+                <div class="info-wind">
+                    <span>0 km/h</span>
+                </div>
+                <p>Wind Speed</p>
+            </div>
+        </div>  -->
+    <!--2-->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchButton').on('click', function() {
+            var location = $('#locationInput').val();
+            location = location.charAt(0).toUpperCase() + location.slice(1).toLowerCase(); // Capitalize first letter and lowercase the rest
+            $.ajax({
+                url: '/predict',
+                type: 'POST',
+                data: { mandal: location },
+                success: function(response) {
+                    var avgTemp = parseFloat(response.avg_temp).toFixed(1); // Round to 1 decimal place
+                    $('#averageTemperature').html(avgTemp + '<span>°C</span>');
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
